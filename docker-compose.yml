@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/devopslab
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=pass1234
+      - SPRING_REDIS_HOST=redis
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
+  db:
+    image: "postgres:16"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=devopslab
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass1234
